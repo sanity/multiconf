@@ -19,8 +19,8 @@ struct Args {
     selected: String,
 
     /// The prefix template, {} is replaced by selected
-    #[clap(short, long, default_value = "{}>>>")]
-    prefix: String,
+    #[clap(short, long, default_value = "$>>")]
+    separator: String,
 
     /// The input file, or stdin if not specified
     #[clap(short, long)]
@@ -64,7 +64,7 @@ fn watch_input(args :&Args) {
 }
 
 fn process_input(args :&Args) {
-    let selected = args.prefix.replace("{}", &args.selected);
+    let selected = args.selected.to_string() + &args.separator;
     let reader: Box<dyn BufRead> = match &args.input {
         None => Box::new(BufReader::new(io::stdin())),
         Some(filename) => Box::new(BufReader::new(File::open(filename).unwrap())),
@@ -75,7 +75,7 @@ fn process_input(args :&Args) {
     };
     for line in reader.lines() {
         let line = line.unwrap();
-        if line.contains(">>>") {
+        if line.contains(&args.separator) {
             if line.starts_with(selected.as_str()) {
                 writeln!(&mut writer, "{}", &line[selected.len()..]).unwrap();
             }
