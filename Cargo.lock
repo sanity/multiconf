@@ -68,14 +68,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cofilter"
-version = "0.1.0"
-dependencies = [
- "clap",
- "notify",
-]
-
-[[package]]
 name = "filetime"
 version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -266,6 +258,14 @@ dependencies = [
  "net2",
  "winapi 0.2.8",
  "ws2_32-sys",
+]
+
+[[package]]
+name = "multiconf"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "notify",
 ]
 
 [[package]]

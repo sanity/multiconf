@@ -1,7 +1,9 @@
 [package]
-name = "cofilter"
+name = "multiconf"
 version = "0.1.0"
 edition = "2021"
+description = "Easily generate different versions of config files"
+license = "GPL V2"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
