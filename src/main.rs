@@ -18,7 +18,7 @@ struct Args {
     #[clap(short, long)]
     choice: String,
 
-    /// The prefix template, {} is replaced by selected
+    /// Separates choice from the line chosen
     #[clap(short, long, default_value = "$>>")]
     separator: String,
 
@@ -32,6 +32,9 @@ struct Args {
 
     #[clap(short, long, requires("input"), requires("output"))]
     watch : bool,
+
+    #[clap(short, long)]
+    verbose : bool,
 }
 
 fn main() {
@@ -41,21 +44,24 @@ fn main() {
             panic!("watch mode requires input and output files");
         }
 
-        watch_input(&args);
+        watch_input(&args.input.unwrap(), &args.output.unwrap(), &args.choice, &args.separator, &args.verbose);
 
     } else {
-        process_input(&args);
+        process_input(&args.input, &args.output, &args.choice, &args.separator);
     }
 }
 
-fn watch_input(args :&Args) {
+fn watch_input(input : &String, output : &String, choice : &String, seperator : &String, verbose : &bool) {
     let (tx, rx) = channel();
     let mut watcher = raw_watcher(tx).unwrap();
-    watcher.watch(args.input.as_ref().unwrap(), RecursiveMode::NonRecursive).unwrap();
+    watcher.watch(input, RecursiveMode::NonRecursive).unwrap();
     loop {
         match rx.recv() {
-            Ok(RawEvent{path: Some(_), op: Ok(_), cookie: _}) => {
-                process_input(args);
+            Ok(RawEvent{path: Some(path), op: Ok(_), cookie: _}) => {
+                if *verbose {
+                    println!("File changed: {}", path.as_os_str().to_str().unwrap());
+                }
+                process_input(&Option::Some(input.to_owned()), &Option::Some(output.to_owned()), choice, seperator);
             },
             Ok(event) => eprintln!("broken event: {:?}", event),
             Err(e) => eprintln!("watch error: {:?}", e),
@@ -63,19 +69,19 @@ fn watch_input(args :&Args) {
     }
 }
 
-fn process_input(args :&Args) {
-    let choice = args.choice.to_string() + &args.separator;
-    let reader: Box<dyn BufRead> = match &args.input {
+fn process_input(input : &Option<String>, output : &Option<String>, choice : &String, seperator : &String) {
+    let choice = choice.to_owned() + seperator;
+    let reader: Box<dyn BufRead> = match input {
         None => Box::new(BufReader::new(io::stdin())),
         Some(filename) => Box::new(BufReader::new(File::open(filename).unwrap())),
     };
-    let mut writer: Box<dyn Write> = match &args.output {
+    let mut writer: Box<dyn Write> = match output {
         None => Box::new(BufWriter::new(io::stdout())),
         Some(filename) => Box::new(BufWriter::new(File::create(filename).unwrap())),
     };
     for line in reader.lines() {
         let line = line.unwrap();
-        if line.contains(&args.separator) {
+        if line.contains(seperator) {
             if line.starts_with(choice.as_str()) {
                 writeln!(&mut writer, "{}", &line[choice.len()..]).unwrap();
             }
