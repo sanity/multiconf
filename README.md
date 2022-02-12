@@ -38,3 +38,21 @@ canine config 1
 global config 3
 ```
 
+## Command line parameters
+```
+multiconf 0.1.3
+Easily generate different versions of config files
+
+USAGE:
+    multiconf [OPTIONS] --choice <CHOICE>
+
+OPTIONS:
+    -c, --choice <CHOICE>          The selected
+    -h, --help                     Print help information
+    -i, --input <INPUT>            The input file, or stdin if not specified
+    -o, --output <OUTPUT>          The output file, or stdout if not specified
+    -s, --separator <SEPARATOR>    Separates choice from the line chosen [default: $>>]
+    -V, --version                  Print version information
+    -w, --watch                    Watch the input file for changes and update the output file when
+                                   it does
+```

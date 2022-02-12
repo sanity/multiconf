@@ -55,7 +55,7 @@ fn watch_input(input : &String, output : &String, choice : &String, seperator : 
     watcher.watch(input, RecursiveMode::NonRecursive).unwrap();
     loop {
         match rx.recv() {
-            Ok(RawEvent{path: Some(path), op: Ok(_), cookie: _}) => {
+            Ok(RawEvent{path: Some(_path), op: Ok(_), cookie: _}) => {
                 process_input(&Option::Some(input.to_owned()), &Option::Some(output.to_owned()), choice, seperator);
             },
             Ok(event) => eprintln!("broken event: {:?}", event),
