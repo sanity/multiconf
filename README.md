@@ -34,7 +34,7 @@ cat$>>feline config 1
 global config 3
 ```
 
-Then create the "dog" version of `base.txt`:
+Then create `dog.txt` from `base.txt`:
 
 ```
 $ multiconf --choice dog --input base.txt --output dog.txt
@@ -65,7 +65,6 @@ exec --no-startup-id multiconf \
     --input ~/Dropbox/code/linux-cfg/i3/config \
     --output ~/.config/i3/config \
     --watch
-
 ```
 
 Here are some example lines from my i3 config, which I share between machines
@@ -83,7 +82,7 @@ framework$>>font pango:DejaVu Sans Mono 15
 
 ## Command line parameters
 ```
-multiconf 0.1.3
+multiconf]
 Easily generate different versions of config files
 
 USAGE:
