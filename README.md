@@ -55,14 +55,31 @@ If you want dog.txt to be automatically updated every time base.txt changes, use
 $ multiconf --choice dog --input base.txt --output dog.txt --watch
 ```
 
-Typically you'll want to keep this running in the background, for example here
-is the line I use in my i3 config so I can have different versions depending on
-the hostname:
+## Example with i3 config file
+
+Here is the line I use in my i3 config so I can have different versions depending on the hostname of the computer:
 
 ```
-exec --no-startup-id multiconf -c `hostname` -i ~/Dropbox/code/linux-cfg/i3/config -o ~/.config/i3/config -w
+exec --no-startup-id multiconf \
+    --choice `hostname` \
+    --input ~/Dropbox/code/linux-cfg/i3/config \
+    --output ~/.config/i3/config \
+    --watch
 
 ```
+
+Here are some example lines from my i3 config, which I share between machines
+using Dropbox:
+
+```
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+technic$>>font pango:DejaVu Sans Mono 12
+pocket$>>font pango:DejaVu Sans Mono 16
+framework$>>font pango:DejaVu Sans Mono 15
+```
+
+`technic`, `pocket`, and `framework` are the hostnames of my three linux computers.
 
 ## Command line parameters
 ```
