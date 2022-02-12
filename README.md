@@ -26,7 +26,7 @@ global config 3
 Then create the "dog" version of `base.txt`:
 
 ```
-$ multiconf -c dog -i base.txt -o dog.txt
+$ multiconf --choice dog --input base.txt --output dog.txt
 ```
 
 This will contain:
@@ -36,6 +36,21 @@ global config 1
 global config 2
 canine config 1
 global config 3
+```
+
+If you want dog.txt to be automatically updated every time base.txt changes, use:
+
+```
+$ multiconf --choice dog --input base.txt --output dog.txt --watch
+```
+
+Typically you'll want to keep this running in the background, for example here
+is the line I use in my i3 config so I can have different versions depending on
+the hostname:
+
+```
+exec --no-startup-id multiconf -c `hostname` -i ~/Dropbox/code/linux-cfg/i3/config -o ~/.config/i3/config -w
+
 ```
 
 ## Command line parameters
