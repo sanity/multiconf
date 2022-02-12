@@ -1,10 +1,9 @@
 [package]
 name = "multiconf"
-version = "0.1.9"
+version = "0.1.10"
 edition = "2021"
 description = "Easily generate different versions of config files"
 license = "GPL-3.0-only"
-license-file = "LICENSE"
 repository = "https://github.com/sanity/multiconf"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

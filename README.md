@@ -82,7 +82,7 @@ framework$>>font pango:DejaVu Sans Mono 15
 
 ## Command line parameters
 ```
-multiconf]
+multiconf [version]
 Easily generate different versions of config files
 
 USAGE:
