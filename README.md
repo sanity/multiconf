@@ -11,6 +11,17 @@ all of these computers, some require different variations.
 
 I created multiconf to make it easy to generate multiple variations of a config file.
 
+## How to install
+
+1. Install cargo (the Rust package manager)):
+```
+$ curl https://sh.rustup.rs -sSf | sh
+```
+2. Install multiconf:
+```
+$ cargo install multiconf
+```
+
 ## How to use
 
 Create a file called `base.txt`:
