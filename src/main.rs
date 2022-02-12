@@ -68,7 +68,7 @@ fn process_input(input : &Option<String>, output : &Option<String>, choice : &St
     let choice = choice.to_owned() + seperator;
     let reader: Box<dyn BufRead> = match input {
         None => Box::new(BufReader::new(io::stdin())),
-        Some(filename) => Box::new(BufReader::new(File::open(filename).unwrap())),
+        Some(filename) => Box::new(BufReader::new(File::open(filename).expect("Couldn't read input file"))),
     };
     let mut writer: Box<dyn Write> = match output {
         None => Box::new(BufWriter::new(io::stdout())),
