@@ -13,7 +13,7 @@ I created multiconf to make it easy to generate multiple variations of a config 
 
 ## How to install
 
-1. Install cargo (the Rust package manager)):
+1. Install cargo (the Rust package manager):
 ```
 $ curl https://sh.rustup.rs -sSf | sh
 ```
