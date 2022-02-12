@@ -30,11 +30,9 @@ struct Args {
     #[clap(short, long)]
     output: Option<String>,
 
+    /// Watch the input file for changes and update the output file when it does
     #[clap(short, long, requires("input"), requires("output"))]
     watch : bool,
-
-    #[clap(short, long)]
-    verbose : bool,
 }
 
 fn main() {
@@ -44,23 +42,20 @@ fn main() {
             panic!("watch mode requires input and output files");
         }
 
-        watch_input(&args.input.unwrap(), &args.output.unwrap(), &args.choice, &args.separator, &args.verbose);
+        watch_input(&args.input.unwrap(), &args.output.unwrap(), &args.choice, &args.separator);
 
     } else {
         process_input(&args.input, &args.output, &args.choice, &args.separator);
     }
 }
 
-fn watch_input(input : &String, output : &String, choice : &String, seperator : &String, verbose : &bool) {
+fn watch_input(input : &String, output : &String, choice : &String, seperator : &String) {
     let (tx, rx) = channel();
     let mut watcher = raw_watcher(tx).unwrap();
     watcher.watch(input, RecursiveMode::NonRecursive).unwrap();
     loop {
         match rx.recv() {
             Ok(RawEvent{path: Some(path), op: Ok(_), cookie: _}) => {
-                if *verbose {
-                    println!("File changed: {}", path.as_os_str().to_str().unwrap());
-                }
                 process_input(&Option::Some(input.to_owned()), &Option::Some(output.to_owned()), choice, seperator);
             },
             Ok(event) => eprintln!("broken event: {:?}", event),
