@@ -36,7 +36,7 @@ global config 3
 
 Then create `dog.txt` from `base.txt`:
 
-```
+```bash
 $ multiconf --choice dog --input base.txt --output dog.txt
 ```
 
@@ -51,7 +51,7 @@ global config 3
 
 If you want dog.txt to be automatically updated every time base.txt changes, use:
 
-```
+```bash
 $ multiconf --choice dog --input base.txt --output dog.txt --watch
 ```
 
@@ -59,7 +59,7 @@ $ multiconf --choice dog --input base.txt --output dog.txt --watch
 
 Here is the line I use in my i3 config so I can have different versions depending on the hostname of the computer:
 
-```
+```bash
 exec --no-startup-id multiconf \
     --choice `hostname` \
     --input ~/Dropbox/code/linux-cfg/i3/config \
