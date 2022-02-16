@@ -14,11 +14,11 @@ I created multiconf to make it easy to generate multiple variations of a config 
 ## How to install
 
 1. Install cargo (the Rust package manager):
-```
+```bash
 $ curl https://sh.rustup.rs -sSf | sh
 ```
 2. Install multiconf:
-```
+```bash
 $ cargo install multiconf
 ```
 
